@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>jq.Schedule Demo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://code.jquery.com/jquery-1.10.2.min.js" type="text/javascript" language="javascript"></script>
+<script src="https://code.jquery.com/ui/1.10.4/jquery-ui.min.js" type="text/javascript" language="javascript"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+
+<script type="text/javascript" src="./js/jq.schedule.js"></script>
+<script type="text/javascript" src="../node_modules/vue/dist/vue.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="./css/style.css" />
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+<style>
+  body {
+    padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+  }
+</style>
+<script type="text/javascript">
+
+
+jQuery(document).ready(function(){
+
+  $.ajax({
+  type: 'GET',
+  url: './facility_schedule.json',
+  dataType: 'json',
+  success: function(response) {
+      var scheduleList = response;
+      console.log(scheduleList);
+      var $sc = jQuery("#schedule").timeSchedule({
+          startTime: "09:00", // schedule start time(HH:ii)
+          endTime: "24:00",   // schedule end time(HH:ii)
+          widthTime:60 * 10,  // cell timestamp example 10 minutes
+          timeLineY:100,       // height(px)
+          timeLineBorder:2,   // border(top and bottom)
+          debug:"#debug",     // debug string output elements
+          rows : scheduleList,
+          change: function(node,data){
+              alert("change event");
+          },
+          init_data: function(node,data){
+          },
+          click: function(node,data){
+              alert("click event");
+          },
+          append: function(node,data){
+          },
+          time_click: function(time,data){
+              alert("time click event");
+          },
+      });
+  },
+  error: function() {
+      alert('えらぁ');
+  },
+  complete: function() {
+      alert('こんぷりーと');
+  }
+});
+
+});
+</script>
+</head>
+<body>
+            <div id="schedule"></div>
+</body>
+</html>

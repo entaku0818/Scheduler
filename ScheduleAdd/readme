@@ -1,0 +1,15 @@
+
+node app.js
+
+curl -X POST http://localhost:3000 -H "Accept: application/json" -H "Content-type: application/json" -d '{ "roomId" : "1","startTime" : "11:00","endTime" : "12:00","participants" : "5","secretFlag":"1"}'
+
+
+
+
+{
+  "roomId" : "1",
+  "startTime" : "11:00"
+  "endTime" : "12:00"
+  "participants" : "5"
+  "secretFlag":"1"
+}
