@@ -15,9 +15,9 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 app.use(function(req, res, next) {
 	//"Access-Control-Allow-Origin"をall許可する
- res.header("Access-Control-Allow-Origin", "*");
- res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	next();
 });
 
 

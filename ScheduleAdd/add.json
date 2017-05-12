@@ -1,6 +1,8 @@
 {
     "id": "1",
-    "stertdate": "2017-04-24",
-    "enddate": "2017-04-24",
-    "title": "TDL定例会議"
+    "stertdate": "2017-05-12",
+    "enddate": "2017-05-12",
+    "starttime": "22:00",
+    "endtime": "23:00",
+    "title": "井戸端会議"
 }
