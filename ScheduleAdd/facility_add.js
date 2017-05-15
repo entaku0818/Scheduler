@@ -7,20 +7,18 @@ var casper = require('casper').create({
   var json = fs.read("./add.json");
   var jsondata = JSON.parse(json);
 	var userList = jsondata["users"];
+const BASEURL = "https://dn.ap-com.co.jp/cgi-bin/dneo/dneo.cgi";
 
-
-  casper.start("https://dn.ap-com.co.jp/cgi-bin/dneo/dneo.cgi", function(){
+	var url_pram = '?cmd=plantweekgrp&log=on#cmd=plantadd&date=20170506&enddate=20170506&id=' + jsondata["desknetsId"];
+  casper.start(BASEURL, function(){
     //ログイン
-
-
-
     this.fill('#inputfrm', { UserID: 'endo', _word: 'soccer10' }, true);
 
     /* URLが切り替わるまで処理を待機させてから実行する */
       this.waitForSelector('.dn-main-menu', function() {
       /* ログイン後にツイートページを開く */
       	this.capture('login_done.png');
-				var url = 'https://dn.ap-com.co.jp/cgi-bin/dneo/dneo.cgi?cmd=plantweekgrp&log=on#cmd=plantadd&date=20170506&enddate=20170506&id=11';
+				var url = BASEURL + url_pram;
         this.thenOpen(url, function(){
           this.waitForSelector('#inputfrm', function()  {
             this.capture('page.png');
