@@ -7,7 +7,7 @@ const app = express();
 const TEMPLATE = fs.readFileSync(path.join(__dirname, 'template', 'main.tmpl'));
 const compiled = _.template(TEMPLATE);
 const PORT = process.env.PORT || 3100;
-
+const HOSTNAME = '0.0.0.0';
 // urlencodedとjsonは別々に初期化する
 app.use(bodyParser.urlencoded({
     extended: true
@@ -61,6 +61,6 @@ app.post('/add', function(req, res) {
 		});
 })
 
-app.listen(PORT, () => {
-	console.log(`listening on ${PORT}`);
+app.listen(PORT, HOSTNAME, () => {
+	console.log(`Server running at http://${HOSTNAME}:${PORT}/`);
 });
