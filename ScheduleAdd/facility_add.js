@@ -43,8 +43,8 @@ const BASEURL = "https://dn.ap-com.co.jp/cgi-bin/dneo/dneo.cgi";
   casper.then(function(){
       this.capture('scheduleInput.png');
 
-      var startHour = jsondata["starttime"].slice(0,2);
-      var endHour = jsondata["endtime"].slice(0,2);
+      var startHour = Number(jsondata["starttime"].slice(0,2)) + '';
+      var endHour = Number(jsondata["endtime"].slice(0,2)) + '';
 			var startMin = jsondata["starttime"].slice(-2);
       var endMin = jsondata["endtime"].slice(-2);
 
@@ -61,6 +61,7 @@ const BASEURL = "https://dn.ap-com.co.jp/cgi-bin/dneo/dneo.cgi";
 				 'span:nth-child(9) > select.co-timepicker-minute': endMin
 
 		 }, true);
+		 				 this.echo(startHour);
   });
   casper.then(function(){
 		this.wait(10000, function() {
