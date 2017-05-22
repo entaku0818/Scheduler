@@ -1,10 +1,12 @@
 var express = require('express');
 var router = express.Router();
 const fs = require('fs');
-
+const { Scheduler } = require('../models/');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+
+	console.log(Scheduler.findAll());
   res.render('index', { title: 'Express' });
 });
 
@@ -15,6 +17,15 @@ router.post('/add', function(req, res, next) {
 		var data = req.body;
 		console.log(data);
 
+		Scheduler.create(data)
+    .error(function(err) {
+          //エラー時の処理
+          console.log(err);
+    })
+    .success(function(result) {
+          //成功時の処理
+          console.log(result);
+    });
 
     fs.writeFile('./add.json', JSON.stringify(data, null, '    '));
 
