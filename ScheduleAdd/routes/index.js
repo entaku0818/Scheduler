@@ -3,6 +3,13 @@ var router = express.Router();
 const fs = require('fs');
 const { Scheduler } = require('../models/');
 
+
+router.use(function(req, res, next) {
+	//"Access-Control-Allow-Origin"をall許可する
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	next();
+});
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
@@ -17,7 +24,7 @@ router.post('/add', function(req, res, next) {
 		var data = req.body;
 		console.log(data);
 
-		Scheduler.create(data)
+		/* Scheduler.create(data)
     .error(function(err) {
           //エラー時の処理
           console.log(err);
@@ -26,6 +33,7 @@ router.post('/add', function(req, res, next) {
           //成功時の処理
           console.log(result);
     });
+		*/
 
     fs.writeFile('./add.json', JSON.stringify(data, null, '    '));
 
