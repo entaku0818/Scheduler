@@ -13,3 +13,7 @@ curl -X POST http://localhost:3000 -H "Accept: application/json" -H "Content-typ
   "participants" : "5"
   "secretFlag":"1"
 }
+
+
+DB初期化コマンド
+ sequelize db:migrate:undo

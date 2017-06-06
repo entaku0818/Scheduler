@@ -47,8 +47,7 @@ const BASEURL = "https://dn.ap-com.co.jp/cgi-bin/dneo/dneo.cgi";
       var endHour = jsondata["endtime"].slice(0,2);
 			var startMin = jsondata["starttime"].slice(-2);
       var endMin = jsondata["endtime"].slice(-2);
-
-			var startdate = jsondata["stertdate"].replace( /-/g  , "/" );
+			var startdate = jsondata["startdate"].replace( /-/g  , "/" );
 			var enddate = jsondata["enddate"].replace( /-/g  , "/" );
 			this.fillSelectors('form#inputfrm', {
 				'input[data-name="startdate"]': startdate,
