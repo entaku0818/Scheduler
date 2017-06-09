@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 const fs = require('fs');
-const { Scheduler } = require('../models/');
-
+const { facility_schedule } = require('../models/');
+const moment = require('moment');
 
 router.use(function(req, res, next) {
 	//"Access-Control-Allow-Origin"をall許可する
@@ -13,30 +13,58 @@ router.use(function(req, res, next) {
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
-	console.log(Scheduler.findAll());
   res.render('index', { title: 'Express' });
 });
 
 router.post('/', function(req, res, next) {
     // リクエストボディを出力
 
+
     // パラメータ名、nameを出力
 		var data = req.body;
 		console.log(data);
 
+		var start = moment(data['start']).format();
+		var end = moment(data['end']).format();
 
-		Scheduler.create(data)
-			.error(function(err) {
-          //エラー時の処理
-          console.log(err);
-					res.send('よやくしっぱい！！');
 
-			})
-			.then(function(result) {
-				//成功時の処理
-				console.log(result);
-				res.send('予約完了しました！！！');
-			});
+		facility_schedule.findAll({
+		  where: {
+				$or: [
+			    {start: {
+						gte: start,
+						lt: end
+					}},
+					{end: {
+						gt: start,
+						lte: end
+					}}
+				]
+			},
+			raw: true
+		}).then(function(result) {
+			console.log(result.length);
+			if(result.length > 0){
+				res.contentType('application/json');
+				res.send(JSON.stringify({status:1, test:"すでに予約が入っています(泣)"}));
+			}else{
+				facility_schedule.create(data)
+					.error(function(err) {
+						//エラー時の処理
+						console.log(err);
+						res.send('よやくしっぱい！！');
+					})
+					.then(function(result) {
+						//成功時の処理
+						res.contentType('application/json');
+						res.send(JSON.stringify({status:0, test:"予約完了しました！！！"}));
+					});
+			}
+		});
+
+
+
+
 
 
     fs.writeFile('./add.json', JSON.stringify(data, null, '    '));
