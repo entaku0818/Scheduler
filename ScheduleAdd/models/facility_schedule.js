@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes) {
 		title: DataTypes.TEXT,
 		facilityID: {
 			allowNull: false,
-			DataTypes.INTEGER,
+			type:DataTypes.INTEGER
 		},
 		desknetsId: DataTypes.INTEGER,
 		start: DataTypes.DATE,
