@@ -11,14 +11,31 @@ router.use(function(req, res, next) {
 	next();
 });
 /* GET home page. */
-router.get('/:facilityId/:date', function(req, res, next) {
+router.get('/:facilityId/:fromDateTime/:toDateTime', function(req, res, next) {
 
 
 
 	facility_schedule.findAll({
 		where: {
 			facilityId: req.params.facilityId,
-			start: {gte: req.params.date,lte: moment(req.params.date).add("days", 1).format("YYYY-MM-DD")}
+			start: {gte: req.params.fromDateTime,lte: req.params.toDateTime}
+		},
+		raw: true
+	}).then(function(result) {
+			res.contentType('application/json');
+			res.send(JSON.stringify({status:0, facility:result}));
+	});
+});
+
+router.get('/:facilityId/:dateTime/', function(req, res, next) {
+
+
+
+	facility_schedule.findAll({
+		where: {
+			facilityId: req.params.facilityId,
+			start: {lte: req.params.dateTime},
+			end: {gte: req.params.dateTime},
 		},
 		raw: true
 	}).then(function(result) {
@@ -28,7 +45,7 @@ router.get('/:facilityId/:date', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-    // パラメータ名、nameを出力
+
 		var data = req.body;
 		console.log(data);
 
